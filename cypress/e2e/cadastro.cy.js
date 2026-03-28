@@ -8,6 +8,10 @@ describe('Funcionalidade: Cadastro no Hub de leitura', () => {
         cadastroPages.visitarPaginaCadastro()
     });
 
+    afterEach(() => {
+        cy.screenshot()
+    });
+
     it('Deve fazer cadastro com sucesso, usando função do JavaScript', () => {
         let email = `teste${Date.now()}@teste.com`
         cy.get('#name').type('Alex Mariano')
@@ -17,8 +21,7 @@ describe('Funcionalidade: Cadastro no Hub de leitura', () => {
         cy.get('#confirm-password').type('Teste@123')
         cy.get('#terms-agreement').check()
         cy.get('#register-btn').click()
-        //Resultado esperado
-        cy.url().should('include', 'dashboard')
+        cy.url().should('include', 'dashboard' )
     });
 
     it('Deve fazer cadastro com sucesso, usando Faker(que é uma biblioteca)', () => {
@@ -54,7 +57,7 @@ describe('Funcionalidade: Cadastro no Hub de leitura', () => {
         cy.url().should('include', 'dashboard')
     });
 
-    it.only('Deve validar mensagem ao tentar realizar cadastro sem preencher nome', () => {
+    it('Deve validar mensagem ao tentar realizar cadastro sem preencher nome', () => {
         cadastroPages.preencherCadastro('', 'alexteste@teste.com', '31987456321', 'senha123', 'senha123')
         cy.get(':nth-child(1) > .invalid-feedback').should('contain', 'Nome deve ter pelo menos 2 caracteres')
     });
